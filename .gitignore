@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output / packaged extensions
+*.vsix
+*.vsix.sig
+out/
+dist/
+
+# VS Code
+.vscode/
+*.code-workspace
+.vscode-test/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor swap files
+*.swp
+*~

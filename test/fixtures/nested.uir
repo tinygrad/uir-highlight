@@ -1,0 +1,9 @@
+# CONTENTS: b"\x02\x00\x00\x00"
+%ret = buffer 1 : dtype=i32 slot=0
+%alloced = alloc 3 : dtype=i32 slot=0
+%loop = range 3 : LOOP 0
+%4 = store (index %alloced, %loop), %loop
+%5 = end %4, %loop
+%alloced_after = after %alloced, %5
+%8 = store (index %ret, 0), (load (index (after %alloced, %5), 2))
+%9 = after %ret, %8

@@ -1,0 +1,412 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "UIR",
+  "scopeName": "source.uir",
+  "patterns": [
+    {
+      "include": "#expect"
+    },
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#string"
+    },
+    {
+      "include": "#op"
+    },
+    {
+      "include": "#ssa-def"
+    },
+    {
+      "include": "#ssa-ref"
+    },
+    {
+      "include": "#axis-type"
+    },
+    {
+      "include": "#dtype"
+    },
+    {
+      "include": "#range-id"
+    },
+    {
+      "include": "#hex-float"
+    },
+    {
+      "include": "#number"
+    },
+    {
+      "include": "#key"
+    }
+  ],
+  "repository": {
+    "expect": {
+      "match": "^#\\s*EXPECT\\b.*$",
+      "name": "comment.line.expect.uir"
+    },
+    "comment": {
+      "match": "[#;].*$",
+      "name": "comment.line.uir"
+    },
+    "string": {
+      "match": "\"[^\"\\n]*\"",
+      "name": "string.quoted.double.uir"
+    },
+    "op": {
+      "patterns": [
+        {
+          "match": "\\bcontiguous_backward\\b",
+          "name": "keyword.other.op.uir.contiguous-backward"
+        },
+        {
+          "match": "\\bcustom_function\\b",
+          "name": "keyword.other.op.uir.custom-function"
+        },
+        {
+          "match": "\\brewrite_error\\b",
+          "name": "keyword.other.op.uir.rewrite-error"
+        },
+        {
+          "match": "\\breciprocal\\b",
+          "name": "keyword.other.op.uir.reciprocal"
+        },
+        {
+          "match": "\\ballreduce\\b",
+          "name": "keyword.other.op.uir.allreduce"
+        },
+        {
+          "match": "\\bpyliteral\\b",
+          "name": "keyword.other.op.uir.pyliteral"
+        },
+        {
+          "match": "\\bthreefry\\b",
+          "name": "keyword.other.op.uir.threefry"
+        },
+        {
+          "match": "\\bfloordiv\\b",
+          "name": "keyword.other.op.uir.floordiv"
+        },
+        {
+          "match": "\\bfloormod\\b",
+          "name": "keyword.other.op.uir.floormod"
+        },
+        {
+          "match": "\\bbackedge\\b",
+          "name": "keyword.other.op.uir.backedge"
+        },
+        {
+          "match": "\\bspecial\\b",
+          "name": "keyword.other.op.uir.special"
+        },
+        {
+          "match": "\\bprogram\\b",
+          "name": "keyword.other.op.uir.program"
+        },
+        {
+          "match": "\\bgetaddr\\b",
+          "name": "keyword.other.op.uir.getaddr"
+        },
+        {
+          "match": "\\bbitcast\\b",
+          "name": "keyword.other.op.uir.bitcast"
+        },
+        {
+          "match": "\\bbarrier\\b",
+          "name": "keyword.other.op.uir.barrier"
+        },
+        {
+          "match": "\\bcustomi\\b",
+          "name": "keyword.other.op.uir.customi"
+        },
+        {
+          "match": "\\bmselect\\b",
+          "name": "keyword.other.op.uir.mselect"
+        },
+        {
+          "match": "\\breshape\\b",
+          "name": "keyword.other.op.uir.reshape"
+        },
+        {
+          "match": "\\bpermute\\b",
+          "name": "keyword.other.op.uir.permute"
+        },
+        {
+          "match": "\\bunshard\\b",
+          "name": "keyword.other.op.uir.unshard"
+        },
+        {
+          "match": "\\bbuffer\\b",
+          "name": "keyword.other.op.uir.buffer"
+        },
+        {
+          "match": "\\blinear\\b",
+          "name": "keyword.other.op.uir.linear"
+        },
+        {
+          "match": "\\bsource\\b",
+          "name": "keyword.other.op.uir.source"
+        },
+        {
+          "match": "\\bbinary\\b",
+          "name": "keyword.other.op.uir.binary"
+        },
+        {
+          "match": "\\bshrink\\b",
+          "name": "keyword.other.op.uir.shrink"
+        },
+        {
+          "match": "\\bmulacc\\b",
+          "name": "keyword.other.op.uir.mulacc"
+        },
+        {
+          "match": "\\bcustom\\b",
+          "name": "keyword.other.op.uir.custom"
+        },
+        {
+          "match": "\\bdetach\\b",
+          "name": "keyword.other.op.uir.detach"
+        },
+        {
+          "match": "\\bmstack\\b",
+          "name": "keyword.other.op.uir.mstack"
+        },
+        {
+          "match": "\\bexpand\\b",
+          "name": "keyword.other.op.uir.expand"
+        },
+        {
+          "match": "\\breduce\\b",
+          "name": "keyword.other.op.uir.reduce"
+        },
+        {
+          "match": "\\balloc\\b",
+          "name": "keyword.other.op.uir.alloc"
+        },
+        {
+          "match": "\\bparam\\b",
+          "name": "keyword.other.op.uir.param"
+        },
+        {
+          "match": "\\bafter\\b",
+          "name": "keyword.other.op.uir.after"
+        },
+        {
+          "match": "\\bgroup\\b",
+          "name": "keyword.other.op.uir.group"
+        },
+        {
+          "match": "\\bstack\\b",
+          "name": "keyword.other.op.uir.stack"
+        },
+        {
+          "match": "\\bindex\\b",
+          "name": "keyword.other.op.uir.index"
+        },
+        {
+          "match": "\\bstore\\b",
+          "name": "keyword.other.op.uir.store"
+        },
+        {
+          "match": "\\btrunc\\b",
+          "name": "keyword.other.op.uir.trunc"
+        },
+        {
+          "match": "\\bcmplt\\b",
+          "name": "keyword.other.op.uir.cmplt"
+        },
+        {
+          "match": "\\bcmpne\\b",
+          "name": "keyword.other.op.uir.cmpne"
+        },
+        {
+          "match": "\\bcmpeq\\b",
+          "name": "keyword.other.op.uir.cmpeq"
+        },
+        {
+          "match": "\\bwhere\\b",
+          "name": "keyword.other.op.uir.where"
+        },
+        {
+          "match": "\\brange\\b",
+          "name": "keyword.other.op.uir.range"
+        },
+        {
+          "match": "\\bendif\\b",
+          "name": "keyword.other.op.uir.endif"
+        },
+        {
+          "match": "\\bconst\\b",
+          "name": "keyword.other.op.uir.const"
+        },
+        {
+          "match": "\\bstage\\b",
+          "name": "keyword.other.op.uir.stage"
+        },
+        {
+          "match": "\\bnoop\\b",
+          "name": "keyword.other.op.uir.noop"
+        },
+        {
+          "match": "\\bcall\\b",
+          "name": "keyword.other.op.uir.call"
+        },
+        {
+          "match": "\\bsink\\b",
+          "name": "keyword.other.op.uir.sink"
+        },
+        {
+          "match": "\\bload\\b",
+          "name": "keyword.other.op.uir.load"
+        },
+        {
+          "match": "\\bwmma\\b",
+          "name": "keyword.other.op.uir.wmma"
+        },
+        {
+          "match": "\\bcast\\b",
+          "name": "keyword.other.op.uir.cast"
+        },
+        {
+          "match": "\\bexp2\\b",
+          "name": "keyword.other.op.uir.exp2"
+        },
+        {
+          "match": "\\blog2\\b",
+          "name": "keyword.other.op.uir.log2"
+        },
+        {
+          "match": "\\bsqrt\\b",
+          "name": "keyword.other.op.uir.sqrt"
+        },
+        {
+          "match": "\\bcdiv\\b",
+          "name": "keyword.other.op.uir.cdiv"
+        },
+        {
+          "match": "\\bcmod\\b",
+          "name": "keyword.other.op.uir.cmod"
+        },
+        {
+          "match": "\\bfdiv\\b",
+          "name": "keyword.other.op.uir.fdiv"
+        },
+        {
+          "match": "\\bcopy\\b",
+          "name": "keyword.other.op.uir.copy"
+        },
+        {
+          "match": "\\bflip\\b",
+          "name": "keyword.other.op.uir.flip"
+        },
+        {
+          "match": "\\bsin\\b",
+          "name": "keyword.other.op.uir.sin"
+        },
+        {
+          "match": "\\bneg\\b",
+          "name": "keyword.other.op.uir.neg"
+        },
+        {
+          "match": "\\badd\\b",
+          "name": "keyword.other.op.uir.add"
+        },
+        {
+          "match": "\\bmul\\b",
+          "name": "keyword.other.op.uir.mul"
+        },
+        {
+          "match": "\\bshl\\b",
+          "name": "keyword.other.op.uir.shl"
+        },
+        {
+          "match": "\\bshr\\b",
+          "name": "keyword.other.op.uir.shr"
+        },
+        {
+          "match": "\\bmax\\b",
+          "name": "keyword.other.op.uir.max"
+        },
+        {
+          "match": "\\bxor\\b",
+          "name": "keyword.other.op.uir.xor"
+        },
+        {
+          "match": "\\band\\b",
+          "name": "keyword.other.op.uir.and"
+        },
+        {
+          "match": "\\bsub\\b",
+          "name": "keyword.other.op.uir.sub"
+        },
+        {
+          "match": "\\bpow\\b",
+          "name": "keyword.other.op.uir.pow"
+        },
+        {
+          "match": "\\bend\\b",
+          "name": "keyword.other.op.uir.end"
+        },
+        {
+          "match": "\\bins\\b",
+          "name": "keyword.other.op.uir.ins"
+        },
+        {
+          "match": "\\bpad\\b",
+          "name": "keyword.other.op.uir.pad"
+        },
+        {
+          "match": "\\bor\\b",
+          "name": "keyword.other.op.uir.or"
+        },
+        {
+          "match": "\\bif\\b",
+          "name": "keyword.other.op.uir.if"
+        }
+      ]
+    },
+    "ssa-def": {
+      "match": "^(%\\w+)(\\s*=)",
+      "captures": {
+        "1": {
+          "name": "variable.other.ssa.uir"
+        },
+        "2": {
+          "name": "keyword.operator.assignment.uir"
+        }
+      }
+    },
+    "ssa-ref": {
+      "match": "%\\w+",
+      "name": "variable.other.ssa.uir"
+    },
+    "axis-type": {
+      "match": "\\b(DEVICE|GLOBAL|LOCAL|WARP|WEAK|LOOP|UPCAST)\\b",
+      "name": "constant.other.axistype.uir"
+    },
+    "dtype": {
+      "match": "\\b(weakint|weakfloat|bool|bf16|f16|f32|f64|i8|i16|i32|i64|u8|u16|u32|u64)\\b",
+      "name": "support.type.dtype.uir"
+    },
+    "range-id": {
+      "match": "\\br\\d+(?:_\\d+)*\\b",
+      "name": "constant.numeric.range-id.uir"
+    },
+    "hex-float": {
+      "match": "\\b0x[0-9a-fA-F.]+p[+-]?\\d+\\b",
+      "name": "constant.numeric.hex-float.uir"
+    },
+    "boolean": {
+      "match": "\\b(True|False|true|false)\\b",
+      "name": "constant.language.boolean.uir"
+    },
+    "number": {
+      "match": "-?\\b\\d+\\b",
+      "name": "constant.numeric.uir"
+    },
+    "key": {
+      "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?==)",
+      "name": "variable.parameter.key.uir"
+    }
+  }
+}
