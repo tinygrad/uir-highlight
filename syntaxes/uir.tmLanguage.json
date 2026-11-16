@@ -13,13 +13,19 @@
       "include": "#string"
     },
     {
-      "include": "#op"
-    },
-    {
       "include": "#ssa-def"
     },
     {
       "include": "#ssa-ref"
+    },
+    {
+      "include": "#key"
+    },
+    {
+      "include": "#op"
+    },
+    {
+      "include": "#addrspace"
     },
     {
       "include": "#axis-type"
@@ -31,13 +37,22 @@
       "include": "#range-id"
     },
     {
+      "include": "#boolean"
+    },
+    {
       "include": "#hex-float"
+    },
+    {
+      "include": "#hex-integer"
+    },
+    {
+      "include": "#float"
     },
     {
       "include": "#number"
     },
     {
-      "include": "#key"
+      "include": "#punctuation"
     }
   ],
   "repository": {
@@ -50,8 +65,16 @@
       "name": "comment.line.uir"
     },
     "string": {
-      "match": "\"[^\"\\n]*\"",
-      "name": "string.quoted.double.uir"
+      "patterns": [
+        {
+          "match": "b?\"(?:\\\\[^\\r\\n]|[^\"\\\\\\r\\n])*(?:\"|$)",
+          "name": "string.quoted.double.uir"
+        },
+        {
+          "match": "b?'(?:\\\\[^\\r\\n]|[^'\\\\\\r\\n])*(?:'|$)",
+          "name": "string.quoted.single.uir"
+        }
+      ]
     },
     "op": {
       "patterns": [
@@ -68,10 +91,6 @@
           "name": "keyword.other.op.uir.rewrite-error"
         },
         {
-          "match": "\\breciprocal\\b",
-          "name": "keyword.other.op.uir.reciprocal"
-        },
-        {
           "match": "\\ballreduce\\b",
           "name": "keyword.other.op.uir.allreduce"
         },
@@ -80,16 +99,16 @@
           "name": "keyword.other.op.uir.pyliteral"
         },
         {
+          "match": "\\btruncdiv\\b",
+          "name": "keyword.other.op.uir.truncdiv"
+        },
+        {
+          "match": "\\btruncmod\\b",
+          "name": "keyword.other.op.uir.truncmod"
+        },
+        {
           "match": "\\bthreefry\\b",
           "name": "keyword.other.op.uir.threefry"
-        },
-        {
-          "match": "\\bfloordiv\\b",
-          "name": "keyword.other.op.uir.floordiv"
-        },
-        {
-          "match": "\\bfloormod\\b",
-          "name": "keyword.other.op.uir.floormod"
         },
         {
           "match": "\\bbackedge\\b",
@@ -136,8 +155,16 @@
           "name": "keyword.other.op.uir.unshard"
         },
         {
+          "match": "\\bassert\\b",
+          "name": "keyword.other.op.uir.assert"
+        },
+        {
           "match": "\\bbuffer\\b",
           "name": "keyword.other.op.uir.buffer"
+        },
+        {
+          "match": "\\bextern\\b",
+          "name": "keyword.other.op.uir.extern"
         },
         {
           "match": "\\blinear\\b",
@@ -206,6 +233,10 @@
         {
           "match": "\\bstore\\b",
           "name": "keyword.other.op.uir.store"
+        },
+        {
+          "match": "\\brecip\\b",
+          "name": "keyword.other.op.uir.recip"
         },
         {
           "match": "\\btrunc\\b",
@@ -280,14 +311,6 @@
           "name": "keyword.other.op.uir.sqrt"
         },
         {
-          "match": "\\bcdiv\\b",
-          "name": "keyword.other.op.uir.cdiv"
-        },
-        {
-          "match": "\\bcmod\\b",
-          "name": "keyword.other.op.uir.cmod"
-        },
-        {
           "match": "\\bfdiv\\b",
           "name": "keyword.other.op.uir.fdiv"
         },
@@ -344,6 +367,14 @@
           "name": "keyword.other.op.uir.pow"
         },
         {
+          "match": "\\bdiv\\b",
+          "name": "keyword.other.op.uir.div"
+        },
+        {
+          "match": "\\bmod\\b",
+          "name": "keyword.other.op.uir.mod"
+        },
+        {
           "match": "\\bend\\b",
           "name": "keyword.other.op.uir.end"
         },
@@ -366,7 +397,7 @@
       ]
     },
     "ssa-def": {
-      "match": "^(%\\w+)(\\s*=)",
+      "match": "^[ \\t]*(%\\w+)\\s*(=)",
       "captures": {
         "1": {
           "name": "variable.other.ssa.uir"
@@ -380,12 +411,16 @@
       "match": "%\\w+",
       "name": "variable.other.ssa.uir"
     },
+    "addrspace": {
+      "match": "\\b(GLOBAL|ALU)\\b",
+      "name": "constant.other.addrspace.uir"
+    },
     "axis-type": {
       "match": "\\b(DEVICE|GLOBAL|LOCAL|WARP|WEAK|LOOP|UPCAST)\\b",
       "name": "constant.other.axistype.uir"
     },
     "dtype": {
-      "match": "\\b(weakint|weakfloat|bool|bf16|f16|f32|f64|i8|i16|i32|i64|u8|u16|u32|u64)\\b",
+      "match": "\\b(void|int|float|weakint|weakfloat|bool|bf16|f16|f32|f64|i8|i16|i32|i64|u8|u16|u32|u64)\\b",
       "name": "support.type.dtype.uir"
     },
     "range-id": {
@@ -393,8 +428,16 @@
       "name": "constant.numeric.range-id.uir"
     },
     "hex-float": {
-      "match": "\\b0x[0-9a-fA-F.]+p[+-]?\\d+\\b",
+      "match": "-?\\b0x[0-9a-fA-F.]+p[+-]?\\d+\\b",
       "name": "constant.numeric.hex-float.uir"
+    },
+    "hex-integer": {
+      "match": "-?\\b0x[0-9a-fA-F]+\\b",
+      "name": "constant.numeric.hex-integer.uir"
+    },
+    "float": {
+      "match": "-?\\b(?:(?:0|[1-9][0-9]*)(?:\\.[0-9]+(?:e[+-]?[0-9]+)?|e[+-]?[0-9]+)|inf|nan)\\b",
+      "name": "constant.numeric.float.uir"
     },
     "boolean": {
       "match": "\\b(True|False|true|false)\\b",
@@ -407,6 +450,30 @@
     "key": {
       "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?==)",
       "name": "variable.parameter.key.uir"
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "match": "[{}]",
+          "name": "punctuation.section.block.uir"
+        },
+        {
+          "match": "[\\[\\]]",
+          "name": "punctuation.section.brackets.uir"
+        },
+        {
+          "match": "[()]",
+          "name": "punctuation.section.parens.uir"
+        },
+        {
+          "match": "[:,]",
+          "name": "punctuation.separator.uir"
+        },
+        {
+          "match": "=",
+          "name": "keyword.operator.assignment.uir"
+        }
+      ]
     }
   }
 }

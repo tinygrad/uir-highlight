@@ -1,20 +1,32 @@
 {
   "name": "uir-highlight",
   "displayName": "tinygrad UIR Highlight",
-  "description": "Syntax highlighting for tinygrad UIR (.uir) files, with ops colored exactly like tinygrad's render_uir output.",
-  "version": "0.2.2",
+  "description": "Syntax highlighting for tinygrad and studentgrad UIR (.uir) files, with tinygrad-style op colors.",
+  "version": "0.2.6",
   "publisher": "local",
   "license": "MIT",
-  "engines": { "vscode": "^1.75.0" },
-  "categories": ["Programming Languages"],
-  "activationEvents": ["onLanguage:uir"],
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:uir"
+  ],
   "main": "./extension.js",
   "contributes": {
     "languages": [
       {
         "id": "uir",
-        "aliases": ["UIR", "tinygrad UIR"],
-        "extensions": [".uir"],
+        "aliases": [
+          "UIR",
+          "tinygrad UIR",
+          "studentgrad UIR"
+        ],
+        "extensions": [
+          ".uir"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -29,5 +41,9 @@
   "scripts": {
     "gen": "node gen_grammar.js",
     "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.3.2"
   }
 }

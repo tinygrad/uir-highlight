@@ -1,0 +1,12 @@
+# CONTENTS: 25
+# Scoped shadowing syntax from studentgrad/tests/week1/scoped_shadowing.uir.
+%value = 3
+%block = {
+  %value = add %value 4
+  %inner = {
+    %value = mul %value 2
+    %result = add %value 1
+  }
+  %result = add %value %inner
+}
+%result = add %value %block
