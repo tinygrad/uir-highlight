@@ -5,17 +5,17 @@ const fs = require("fs");
 const OP_COLORS = {
   load: "#ffc0c0", store: "#87CEEB", const: "#9e9e9e", reduce: "#FF5B5B", assert: "#cccccc",
   range: "#c8a0e0", barrier: "#ff8080", if: "#c8b0c0", special: "#c0c0ff",
-  index: "#CEF9B7", stack: "#D8F9E4",
+  index: "#D8F9E4", stack: "#D8F9E4",
   wmma: "#efefc0", unshard: "#f6ccff", ins: "#eec4ff",
   // GroupOp.Movement
   reshape: "#D8F9E4", expand: "#D8F9E4", permute: "#D8F9E4", pad: "#D8F9E4", shrink: "#D8F9E4", flip: "#D8F9E4",
   // GroupOp.ALU
-  exp2: "#ffffc0", log2: "#ffffc0", sin: "#ffffc0", sqrt: "#ffffc0", recip: "#ffffc0", neg: "#ffffc0", trunc: "#ffffc0",
+  cast: "#ffffc0", exp2: "#ffffc0", log2: "#ffffc0", sin: "#ffffc0", sqrt: "#ffffc0", recip: "#ffffc0", neg: "#ffffc0", trunc: "#ffffc0",
   add: "#ffffc0", mul: "#ffffc0", truncdiv: "#ffffc0", max: "#ffffc0", truncmod: "#ffffc0", cmplt: "#ffffc0", cmpne: "#ffffc0",
   cmpeq: "#ffffc0", xor: "#ffffc0", shl: "#ffffc0", shr: "#ffffc0", or: "#ffffc0", and: "#ffffc0", sub: "#ffffc0",
   fdiv: "#ffffc0", pow: "#ffffc0", div: "#ffffc0", mod: "#ffffc0", where: "#ffffc0", mulacc: "#ffffc0",
   threefry: "#ffff80",
-  buffer: "#B0BDFF", extern: "#adc3e8", getaddr: "#9DB1F0", copy: "#ff90c0", custom_function: "#bf71b6",
+  buffer: "#B0BDFF", extern: "#adc3e8", getaddr: "#9DB1F0", copy: "#ff90c0", native: "#bf71b6", custom_function: "#bf71b6",
   call: "#00B7C8", param: "#14686F", source: "#c0c0c0", binary: "#404040",
   linear: "#7DF4FF", alloc: "#C07788",
   allreduce: "#ff40a0", mselect: "#d040a0", mstack: "#d040a0",
@@ -31,7 +31,7 @@ const ALL_OPS = [
   "add", "mul", "shl", "shr", "truncdiv", "max", "truncmod", "cmplt", "cmpne", "cmpeq", "xor", "or", "and",
   "threefry", "sub", "fdiv", "pow", "div", "mod", "where", "mulacc",
   "barrier", "range", "if", "end", "endif", "backedge", "const", "custom", "customi", "ins",
-  "contiguous_backward", "detach", "stage", "copy", "mselect", "mstack", "custom_function",
+  "contiguous_backward", "detach", "stage", "copy", "native", "mselect", "mstack", "custom_function",
   "reshape", "permute", "expand", "pad", "flip", "unshard", "reduce", "allreduce", "pyliteral",
 ];
 

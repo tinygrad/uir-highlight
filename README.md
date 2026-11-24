@@ -18,13 +18,13 @@ show up identically in any color theme, including nested inline ops such as
 | `assert` (studentgrad) | `#cccccc` (explicit Dark Modern default foreground) |
 | `range` | `#c8a0e0` |
 | `end` | `#746c64` (tinygrad's warm gray `#524C46`, slightly lightened for dark themes) |
-| `index` | `#CEF9B7` |
 | `extern` | `#adc3e8` |
 | `param` | `#14686F` |
 | `call` | `#00B7C8` |
+| `native` | `#bf71b6` |
 | `stage` | `#FFC14D` |
-| ALU ops (`add`, `mul`, `sub`, ...) | `#ffffc0` |
-| movement ops (`reshape`, `expand`, ...) | `#D8F9E4` |
+| ALU ops (including `cast`) | `#ffffc0` |
+| `stack`, `index`, `reshape`, `expand`, `permute`, `pad`, `shrink`, `flip` | `#D8F9E4` |
 | ... | see `extension.js` |
 
 Axis types (`WEAK`, `GLOBAL`, `LOCAL`, ...) are colored per tinygrad's `axis_colors`
@@ -59,12 +59,12 @@ matching assignments in its definition picker.
 
 ## Install
 
-Copy/symlink this folder into `~/.vscode/extensions/uir-highlight-0.2.6`, or:
+Copy/symlink this folder into `~/.vscode/extensions/uir-highlight-0.2.7`, or:
 
 ```sh
 npm i -g @vscode/vsce
 vsce package
-code --install-extension uir-highlight-0.2.6.vsix
+code --install-extension uir-highlight-0.2.7.vsix
 ```
 
 Or just open the folder in VSCode and press F5 to try it in an Extension Development Host.
@@ -75,7 +75,7 @@ Or just open the folder in VSCode and press F5 to try it in an Extension Develop
   Contrast on Dark Modern's `#1F1F1F` background is 3.2:1 (up from 1.95:1),
   intentionally subdued rather than meeting the 4.5:1 normal-text accessibility target.
 - Other dark tinygrad colors remain unchanged (`after` `#8A7866`, `binary` `#404040`, ...).
-- `sink`, `cast`, `bitcast`, and a few other ops have no color in tinygrad, so they
+- `sink`, `bitcast`, and a few other ops have no color in tinygrad, so they
   fall back to your theme's keyword color.
 - To regenerate the grammar after adding ops: `node gen_grammar.js`.
 - Run highlighting regression tests (including real TextMate tokenization): `npm ci && npm test`.

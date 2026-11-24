@@ -7,7 +7,8 @@ const { test } = require("node:test");
 const source = fs.readFileSync(path.join(__dirname, "../extension.js"), "utf8");
 const colors = {
   buffer: "#B0BDFF", extern: "#adc3e8", alloc: "#C07788", range: "#c8a0e0", LOOP: "#E74856",
-  store: "#87CEEB", index: "#CEF9B7", end: "#746c64", after: "#8A7866",
+  native: "#bf71b6",
+  store: "#87CEEB", index: "#D8F9E4", end: "#746c64", after: "#8A7866",
   load: "#ffc0c0", reduce: "#FF5B5B", assert: "#cccccc", or: "#ffffc0",
   add: "#ffffc0", mul: "#ffffc0", max: "#ffffc0", param: "#14686F",
   ALU: "#ffffc0", GLOBAL: "#3B78FF", reshape: "#D8F9E4", permute: "#D8F9E4",
@@ -73,6 +74,15 @@ test("named SSA ids and all nested ops use the UIR palette", () => {
   assert.deepEqual(highlight(text), expected(text, tokens));
   const crlf = text.replaceAll("\n", "\r\n");
   assert.deepEqual(highlight(crlf), expected(crlf, tokens));
+});
+
+test("movement and stack share mint; cast shares ALU yellow", () => {
+  const ops = ["stack", "index", "reshape", "expand", "permute", "pad", "shrink", "flip", "cast", "add"];
+  assert.deepEqual(highlight(ops.join(" ")).map(r => r.color), ops.map(op => ["cast", "add"].includes(op) ? "#ffffc0" : "#D8F9E4"));
+});
+
+test("native uses tinygrad's purple", () => {
+  assert.deepEqual(highlight("%x = native"), expected("%x = native", ["%x", "native"]));
 });
 
 test("extern uses its own color without changing buffer highlighting", () => {

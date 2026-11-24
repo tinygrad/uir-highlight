@@ -195,6 +195,10 @@
           "name": "keyword.other.op.uir.detach"
         },
         {
+          "match": "\\bnative\\b",
+          "name": "keyword.other.op.uir.native"
+        },
+        {
           "match": "\\bmstack\\b",
           "name": "keyword.other.op.uir.mstack"
         },

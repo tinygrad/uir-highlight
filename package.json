@@ -2,7 +2,7 @@
   "name": "uir-highlight",
   "displayName": "tinygrad UIR Highlight",
   "description": "Syntax highlighting for tinygrad and studentgrad UIR (.uir) files, with tinygrad-style op colors.",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "publisher": "local",
   "license": "MIT",
   "engines": {
