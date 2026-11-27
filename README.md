@@ -50,6 +50,12 @@ Attribute names (`slot`, `dtype`, `op`, `pop`, etc.) are decorated in muted gray
 Each op also gets its own scope (`keyword.other.op.uir.<op>`) if you'd
 rather theme them yourself.
 
+## Type hover
+
+Hover over or click an SSA reference to see its dtype and shape: `f32 [1 3 4]`,
+`i32 [3]`, or `bool []` for a scalar. The type comes from the definition visible
+at that reference.
+
 ## Definition navigation
 
 Right-click an SSA reference such as `%22` and choose **Go to Definition** (or press

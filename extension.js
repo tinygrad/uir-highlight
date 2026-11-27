@@ -1,4 +1,5 @@
 const vscode = require("vscode");
+const { analyze, referenceAt, typeOf, formatShape } = require("./uir-types");
 
 // Op colors from tinygrad/uop/render.py (uops_colors), with readability adjustments.
 const OP_COLORS = {
@@ -83,6 +84,32 @@ function applyToEditor(editor) {
   for (const [color, ranges] of byColor) editor.setDecorations(deco(color), ranges);
 }
 
+const analysisCache = new WeakMap();
+function analysisFor(document) {
+  const cached = analysisCache.get(document);
+  if (cached && cached.version === document.version) return cached.analysis;
+
+  const analysis = analyze(document.getText());
+  analysisCache.set(document, { version: document.version, analysis });
+  return analysis;
+}
+
+function provideHover(document, position) {
+  const analysis = analysisFor(document);
+  const reference = referenceAt(analysis, document.offsetAt(position));
+  if (!reference) return null;
+  const { shape, dtype } = typeOf(analysis, reference);
+  if (!shape && !dtype) return null;
+
+  const contents = new vscode.MarkdownString();
+  contents.appendText(`${dtype || "unknown"} ${formatShape(shape)}`);
+  const range = new vscode.Range(
+    document.positionAt(reference.start),
+    document.positionAt(reference.end),
+  );
+  return new vscode.Hover(contents, range);
+}
+
 function provideDefinition(document, position) {
   const text = document.getText();
   const offset = document.offsetAt(position);
@@ -111,8 +138,20 @@ function provideDefinition(document, position) {
   return definitions.length ? definitions : null;
 }
 
+function showHoverOnClick({ textEditor, selections, kind }) {
+  if (kind !== vscode.TextEditorSelectionChangeKind.Mouse) return;
+  if (selections.length !== 1 || !selections[0].isEmpty) return;
+
+  const { document } = textEditor;
+  if (document.languageId !== "uir") return;
+  const reference = referenceAt(analysisFor(document), document.offsetAt(selections[0].active));
+  if (reference) void vscode.commands.executeCommand("editor.action.showHover");
+}
+
 let timer;
 let definitionRegistration;
+let hoverRegistration;
+let selectionRegistration;
 function refreshAll() {
   for (const editor of vscode.window.visibleTextEditors) applyToEditor(editor);
 }
@@ -124,6 +163,8 @@ function scheduleRefresh() {
 function activate() {
   refreshAll();
   definitionRegistration = vscode.languages.registerDefinitionProvider("uir", { provideDefinition });
+  hoverRegistration = vscode.languages.registerHoverProvider("uir", { provideHover });
+  selectionRegistration = vscode.window.onDidChangeTextEditorSelection(showHoverOnClick);
   vscode.window.onDidChangeActiveTextEditor(applyToEditor);
   vscode.window.onDidChangeVisibleTextEditors(refreshAll);
   vscode.workspace.onDidChangeTextDocument(scheduleRefresh);
@@ -131,6 +172,8 @@ function activate() {
 
 function deactivate() {
   definitionRegistration?.dispose();
+  hoverRegistration?.dispose();
+  selectionRegistration?.dispose();
   for (const [, type] of decorationTypes) type.dispose();
 }
 

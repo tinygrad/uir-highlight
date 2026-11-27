@@ -29,13 +29,19 @@ function highlight(text) {
       createTextEditorDecorationType: options => ({ ...options, dispose() {} }),
       onDidChangeActiveTextEditor() {},
       onDidChangeVisibleTextEditors() {},
+      onDidChangeTextEditorSelection() { return { dispose() {} }; },
     },
     workspace: { onDidChangeTextDocument() {} },
-    languages: { registerDefinitionProvider: () => ({ dispose() {} }) },
+    languages: {
+      registerDefinitionProvider: () => ({ dispose() {} }),
+      registerHoverProvider: () => ({ dispose() {} }),
+    },
+    commands: { executeCommand() {} },
   };
   const context = { module: { exports: {} }, require: name => {
-    assert.equal(name, "vscode");
-    return vscode;
+    if (name === "vscode") return vscode;
+    assert.equal(name, "./uir-types");
+    return require(path.join(__dirname, "../uir-types.js"));
   }, setTimeout, clearTimeout };
   vm.runInNewContext(source, context);
   context.module.exports.activate();
